@@ -29,27 +29,15 @@ function checkInput() {
       highscore = score;
       document.querySelector('.highscore').textContent = highscore;
     }
-  } else if (guess > number) {
-    guessTooHigh();
-  } else if (guess < number) {
-    guessTooLow();
+  } else if (guess != number) {
+    guessNotNumber(guess);
   }
 }
 
-function guessTooHigh() {
+function guessNotNumber(guess) {
   if (score > 1) {
-    messageElement.textContent = '📈 Too High!';
-    score--;
-    scoreElement.textContent = score;
-  } else {
-    messageElement.textContent = '💥 You Lost!';
-    scoreElement.textContent = 0;
-  }
-}
-
-function guessTooLow() {
-  if (score > 1) {
-    messageElement.textContent = '📉 Too Low!';
+    messageElement.textContent =
+      guess > number ? '📈 Too High!' : '📉 Too Low!';
     score--;
     scoreElement.textContent = score;
   } else {
@@ -59,6 +47,11 @@ function guessTooLow() {
 }
 
 document.querySelector('.check').addEventListener('click', checkInput);
+guessElement.addEventListener('keypress', function (event) {
+  if (event.key === 'Enter') {
+    checkInput();
+  }
+});
 
 document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('body').style.backgroundColor = '#222';
